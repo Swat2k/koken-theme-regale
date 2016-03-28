@@ -1,0 +1,47 @@
+<div id="grid" class="col-{{ settings.grid_albums_col_num }} albums">
+	<div class="column"></div>
+</div>
+
+<koken:loop>
+
+	<div class="item">
+
+		<koken:link class="img-hover" title="View {{ album.title }}">
+
+			<koken:img lazy="true" size="{{ settings.thumb_ratio }}" />
+
+			<koken:if data="settings.albums_show_title" equals="hover">
+
+				<span class="overlay">
+
+					<h2>{{ album.title }}</h2>
+
+					<koken:if true="settings.albums_show_summary">
+						<p>{{ album.summary }}</p>
+					</koken:if>
+
+				</span>
+
+			</koken:if>
+
+		</koken:link>
+
+		<koken:if data="settings.albums_show_title" equals="under">
+
+			<div class="img-under-title">
+
+				<h2>{{ album.title }}</h2>
+
+				<koken:if true="settings.albums_show_summary">
+					<p>{{ album.summary }}</p>
+				</koken:if>
+
+			</div>
+
+		</koken:if>
+
+	</div>
+
+</koken:loop>
+
+<koken:asset file="js/grid.js" />

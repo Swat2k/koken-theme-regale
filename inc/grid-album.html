@@ -1,0 +1,40 @@
+<div id="grid" class="col-{{ settings.grid_col_num }}">
+	<div class="column"></div>
+</div>
+
+<koken:loop>
+
+		<div class="item">
+
+			<koken:link class="img-hover" title="Смотреть {{ content.title | content.filename }}">
+
+				<koken:img lazy="true" />
+
+				<koken:if data="settings.contents_show_title" equals="hover">
+
+					<span class="overlay">
+
+						<h2>{{ content.title | content.filename }}</h2>
+
+					</span>
+
+				</koken:if>
+
+			</koken:link>
+
+			<koken:if data="settings.contents_show_title" equals="under">
+
+				<div class="img-under-title">
+
+					<h2>
+						<koken:link title="Смотреть {{ content.title | content.filename }}">{{ content.title | content.filename }}</koken:link>
+					</h2>
+
+				</div>
+
+			</koken:if>
+
+		</div>
+</koken:loop>
+
+<koken:asset file="js/grid.js" />

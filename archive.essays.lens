@@ -1,0 +1,43 @@
+<koken:include file="inc/header.html" />
+
+<div id="text">
+
+<koken:load limit="{{ settings.essays_index_limit }}">
+
+  <koken:head>
+    <meta property="og:site_name" content="{{ site.title }}" />
+    <meta property="og:description" content="{{ site.description strip_html='true' }}" />
+    <meta property="og:title" content="{{ labels.essay.plural }}" />
+    <meta property="og:type" content="blog" />
+    <meta property="og:url" content="{{ location.site_url }}{{ location.here }}" />
+  </koken:head>
+
+  <koken:variable name="list" value="true" />
+
+ 	<p><koken:link to="essays" title="View all {{ labels.essay.plural case='lower' }}">{{ labels.essay.plural }}</koken:link> / {{ archive.type.plural }} / {{ archive.title }}</p>
+
+ 	<br>
+
+   <koken:loop>
+
+   		<koken:include file="inc/article.html" />
+
+   </koken:loop>
+
+    <p>
+        <koken:include file="inc/pagination.html" />
+    </p>
+
+  <koken:else>
+
+	<koken:note>
+
+		<strong>No essays found.</strong> Write some in Text.
+
+	</koken:note>
+
+ </koken:load>
+
+</div>
+
+<koken:include file="inc/footer.html" />

@@ -1,0 +1,190 @@
+<koken:include file="inc/header.html" />
+
+<koken:load>
+
+	<koken:head>
+		<meta property="og:site_name" content="{{ site.title }}" />
+		<meta property="og:title" content="{{ content.title|content.filename strip_html="true" }}" />
+		<meta property="og:description" content="{{ content.caption strip_html="true" }}" />
+		<meta property="og:type" content="website" />
+		<meta property="og:image" content="{{ content.presets.medium_large.url }}" />
+		<meta property="og:image:width" content="{{ content.presets.medium_large.width }}" />
+		<meta property="og:image:height" content="{{ content.presets.medium_large.height }}" />
+		<meta property="og:url" content="{{ content.url }}" />
+		<koken:content_image>
+			<koken:not empty="profile.twitter">
+				<meta name="twitter:card" content="photo" />
+				<meta name="twitter:site" content="@{{ profile.twitter }}" />
+				<meta name="twitter:creator" content="@{{ profile.twitter }}" />
+			</koken:not>
+		</koken:content_image>
+	</koken:head>
+
+	<div id="content">
+
+			<div class="pad">
+
+				<div class="media">
+
+					<div id="content-pagination">
+
+						<koken:previous>
+							<koken:link class="content-pag prev" bind_to_key="left">&larr;</koken:link>
+						</koken:previous>
+
+						<koken:next>
+							<koken:link class="content-pag next" bind_to_key="right">&rarr;</koken:link>
+						</koken:next>
+
+					</div>
+
+					<koken:content_image>
+						<koken:img />
+					</koken:content_image>
+
+					<koken:content_video>
+						<koken:video />
+					</koken:content_video>
+
+				</div> <!-- close .media -->
+
+				<div id="content-caption">
+
+					<div class="col l">
+
+						<ul>
+							<li>
+								<koken:if true="settings.content_show_title">
+									<h2>{{ content.title | content.filename }}</h2>
+								</koken:if>
+							</li>
+							<koken:if true="settings.content_show_date">
+								<li>
+									<koken:time />
+								</li>
+							</koken:if>
+							<koken:parent>
+							<li>
+								<p>
+									Фото в альбоме <koken:link title="Смотреть {{ album.title }}">
+									{{ album.title }}</koken:link>
+								</p>
+							</li>
+							</koken:parent>
+						</ul>
+
+					</div> <!-- close .col -->
+
+					<div class="col r">
+
+						<ul>
+							<koken:if true="settings.content_show_caption">
+								<koken:not empty="content.caption">
+									<li>
+										{{ content.caption paragraphs="true" }}
+									</li>
+								</koken:not>
+							</koken:if>
+							<koken:if true="settings.content_show_meta">
+								<koken:categories>
+								<li>
+									<koken:loop separator=", ">
+										<koken:link title="Смотреть все с тегом {{ category.title }}">
+											{{ category.title }}
+										</koken:link>
+									</koken:loop>
+								</li>
+								</koken:categories>
+								<koken:tags>
+								<li>
+									<koken:loop separator=", ">
+										<koken:link title="Смотреть все с тегом {{ tag.title }}">
+											{{ tag.title }}
+										</koken:link>
+									</koken:loop>
+								</li>
+								</koken:tags>
+							</koken:if>
+							<koken:if true="settings.content_show_exif">
+								<koken:exif>
+								<li>
+									<koken:not empty="exif.model">
+										{{ exif.model }},
+									</koken:not>
+									<koken:not empty="exif.exposure">
+										{{ exif.exposure }},
+									</koken:not>
+									<koken:not empty="exif.aperture">
+										{{ exif.aperture }},
+									</koken:not>
+									<koken:not empty="exif.focal_length">
+										{{ exif.focal_length }},
+									</koken:not>
+									<koken:not empty="exif.iso_speed_ratings">
+										{{ exif.iso_speed_ratings }}
+									</koken:not>
+								</li>
+								</koken:exif>
+							</koken:if>
+							<koken:if true="settings.content_show_license">
+							<li>
+								{{ content.license.clean }}
+							</li>
+							</koken:if>
+							<koken:if true="settings.content_show_dl">
+								<koken:max_download>
+								<li>
+									<strong>Скачать изображение:</strong> <koken:link title="Download">
+										{{ max_download.label }}&nbsp;({{ max_download.width }}x{{ max_download.height }})
+									</koken:link>
+								<li>
+								</koken:max_download>
+							</koken:if>
+
+							<koken:if true="settings.social_bttns_show_one">
+
+								<koken:if true="content.public">
+
+						            <strong>Поделиться : </strong>
+						            <ul class="social-links">
+						           	<li><koken:if empty="profile.twitter"><a href="https://twitter.com/intent/tweet?text={{ content.title|content.filename url_encode="true" }}&url={{ content.url url_encode="true" }}" class="share-twitter"><koken:else><a href="https://twitter.com/intent/tweet?text={{ content.title|content.filename url_encode="true" }}&url={{ content.url url_encode="true" }}&via={{ profile.twitter }}" class="share-twitter"></koken:if>Twitter</a></li>
+						            <li><a href="https://www.facebook.com/sharer.php?u={{ content.url url_encode="true" }}" class="share-facebook" title="Share {{ content.title|content.filename url_encode="true" }} on Facebook">Facebook</a></li>
+						            <li><a href="http://pinterest.com/pin/create/button/?url={{ content.url url_encode="true" }}&media={{ content.presets.large.url url_encode="true" }}&description={{ content.title url_encode="true" }}" class="share-pinterest" title="Share {{ content.title|content.filename url_encode="true" }} on Pinterest">Pinterest</a></li>
+						            <li><a href="http://www.tumblr.com/share/photo?source={{ content.presets.large.url url_encode="true" }}&caption=%3Cp%3E%3Cstrong%3E%3Ca href=&quot;{{ content.url url_encode="true" }}&quot; title=&quot;{{ content.title|content.filename url_encode="true" }}&quot;%3E{{ content.title|content.filename url_encode="true" }}%3C/a%3E%3C/strong%3E%3C/p%3E%3Cp%3E{{ content.caption url_encode="true" }}%3C/p%3E&click_thru={{ content.url url_encode="true" }}" class="share-tumblr" title="Share {{ content.title|content.filename }} on Tumblr">Tumblr</a></li>
+						            <li><a href="https://plus.google.com/share?url={{ content.url url_encode="true" }}" class="share-google" title="Share {{ content.title|content.filename url_encode="true" }} on Google+">Google+</a></li>
+									<li><a href="http://vk.com/share.php?url={{ content.url url_encode="true" }}" class="share-google" title="Поделиться {{ content.title|content.filename url_encode="true" }} в Вконтакте">Вконтакте</a></li>
+						        	</ul>
+
+						            <koken:asset file="sharelite.js" common="true" />
+
+					       		</koken:if>
+
+				        	</koken:if>
+
+							<koken:if true="settings.show_disc_content">
+
+								<div id="kdiscuss">
+
+									<koken:discussion>
+
+										{{ discussion }}
+
+									</koken:discussion>
+
+								</div>
+
+							</koken:if>
+
+						</ul>
+
+					</div> <!-- close .col -->
+
+				</div> <!-- close #content-caption -->
+
+			</div> <!-- close .pad -->
+
+	</div> <!-- close #content -->
+
+</koken:load>
+
+<koken:include file="inc/footer.html" />
